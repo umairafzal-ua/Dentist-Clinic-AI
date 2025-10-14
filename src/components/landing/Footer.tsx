@@ -15,7 +15,7 @@ function Footer() {
                 height={32}
                 className="w-8 h-8"
               />
-              <span className="font-semibold text-lg">DentWise</span>
+              <span className="font-semibold text-lg">DentalAI</span>
             </div>
             <p className="text-sm text-muted-foreground">
               AI-powered dental assistance that actually helps.
@@ -87,7 +87,7 @@ function Footer() {
         </div>
 
         <div className="border-t mt-8 pt-8 text-center text-sm text-muted-foreground">
-          <p>&copy; 2024 DentWise. Built for real people with real dental questions.</p>
+          <p>&copy; 2025 DentalAI. Built for real people with real dental questions.</p>
         </div>
       </div>
     </footer>
