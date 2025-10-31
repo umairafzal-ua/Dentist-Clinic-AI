@@ -11,6 +11,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "avatar.iran.liara.run", // ✅ Added this
       },
+      {
+        protocol: "https",
+        hostname: "img.clerk.com", // ✅ Added this
+      },
     ],
   },
 };
