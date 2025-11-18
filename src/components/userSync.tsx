@@ -1,10 +1,9 @@
 "use client"
 import { syncUser } from '@/lib/actions/users'
 import { useUser } from '@clerk/nextjs'
-import React from 'react'
 import { useEffect } from 'react'
 
-function userSync() {
+function UserSync() {
     const { isSignedIn, isLoaded } = useUser()
 
     useEffect(() => {
@@ -22,4 +21,4 @@ function userSync() {
     return null;
 
 }
-export default userSync
+export default UserSync
