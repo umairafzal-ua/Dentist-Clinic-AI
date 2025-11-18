@@ -1,7 +1,6 @@
 "use server"
 import { auth } from "@clerk/nextjs/server";
 import { prisma } from "../prisma"
-import { time } from "console";
 
 export async function getAppointments() {
     try {
@@ -27,7 +26,7 @@ export async function getAppointments() {
         })
         return appointments;
     } catch (error) {
-        console.log("Error fetching appointments ",error)
+        console.log("Error fetching appointments ", error)
         throw new Error("Failed to fetch Appointments ");
     }
 }
@@ -54,13 +53,20 @@ export async function getUserAppointmentStats(){
             totalAppointments:totalCount,
             completedAppointments:completedCount
         }
-    } catch (error) {
+    } catch {
         return {totalAppointments:0,completedAppointments:0}
     }
 }
 
 
-function transformAppointment(appointment: any) {
+interface AppointmentData {
+    user: { firstName: string | null; lastName: string | null; email: string };
+    doctor: { name: string; imageUrl: string | null };
+    date: Date;
+    [key: string]: unknown;
+}
+
+function transformAppointment(appointment: AppointmentData) {
   return {
     ...appointment,
     patientName: `${appointment.user.firstName || ""} ${appointment.user.lastName || ""}`.trim(),
