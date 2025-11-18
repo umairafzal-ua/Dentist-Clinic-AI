@@ -4,7 +4,6 @@ import { Gender } from "@prisma/client"
 import { prisma } from "../prisma"
 import { generateAvatar } from "../utils"
 import { revalidatePath } from "next/cache"
-import { useQuery, useQueryClient } from "@tanstack/react-query"
 
 export async function getDoctors() {
     try {
@@ -64,9 +63,9 @@ export async function createDoctor(input: CreateDoctorInput) {
 
         revalidatePath('/admin');
         return doctor;
-    } catch (error: any) {
+    } catch (error) {
         console.log("Error creating doctor: ", error);
-        if (error?.code === "P2002") {
+        if ((error as Record<string, unknown>)?.code === "P2002") {
             throw new Error("A doctor with this email already axists.");
         }
         throw new Error("Failed to create doctor.");

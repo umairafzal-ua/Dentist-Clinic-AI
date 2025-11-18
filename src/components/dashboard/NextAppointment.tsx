@@ -13,7 +13,8 @@ async function NextAppointment() {
       const appointmentDate = parseISO(appointment.date);
       const today = new Date();
       const isUpcoming = isSameDay(appointmentDate, today) || isAfter(appointmentDate, today);
-      return isUpcoming && appointment.status === "CONFIRMED";
+      const status = (appointment as Record<string, unknown>).status as string | undefined;
+      return isUpcoming && status === "CONFIRMED";
     }) || [];
 
   // get the next appointment (earliest upcoming one)
@@ -24,6 +25,11 @@ async function NextAppointment() {
   const appointmentDate = parseISO(nextAppointment.date);
   const formattedDate = format(appointmentDate, "EEEE, MMMM d, yyyy");
   const isToday = isSameDay(appointmentDate, new Date());
+  const nextApptRecord = nextAppointment as Record<string, unknown>;
+  const apptStatus = nextApptRecord.status as string | undefined;
+  const apptReason = nextApptRecord.reason as string | undefined;
+  const apptTime = nextApptRecord.time as string | undefined;
+  const apptDoctorName = nextApptRecord.doctorName as string | undefined;
 
   return (
     <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-background">
@@ -43,7 +49,7 @@ async function NextAppointment() {
             </span>
           </div>
           <span className="text-xs text-muted-foreground bg-muted/50 px-2 py-1 rounded">
-            {nextAppointment.status}
+            {apptStatus}
           </span>
         </div>
 
@@ -54,8 +60,8 @@ async function NextAppointment() {
               <UserIcon className="size-4 text-primary" />
             </div>
             <div>
-              <p className="font-medium text-sm">{nextAppointment.doctorName}</p>
-              <p className="text-xs text-muted-foreground">{nextAppointment.reason}</p>
+              <p className="font-medium text-sm">{apptDoctorName}</p>
+              <p className="text-xs text-muted-foreground">{apptReason}</p>
             </div>
           </div>
 
@@ -76,7 +82,7 @@ async function NextAppointment() {
               <ClockIcon className="size-4 text-primary" />
             </div>
             <div>
-              <p className="font-medium text-sm">{nextAppointment.time}</p>
+              <p className="font-medium text-sm">{apptTime}</p>
               <p className="text-xs text-muted-foreground">Local time</p>
             </div>
           </div>

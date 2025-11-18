@@ -11,7 +11,7 @@ function VapiWidget() {
     const [callActive, setCallActive] = useState(false);
     const [connecting, setConnecting] = useState(false);
     const [isSpeaking, setIsSpeaking] = useState(false);
-    const [messages, setMessages] = useState<any[]>([]);
+    const [messages, setMessages] = useState<Array<{ content: string; role: string }>>([]);
     const [callEnded, setCallEnded] = useState(false);
 
     const { user, isLoaded } = useUser();
@@ -46,13 +46,13 @@ function VapiWidget() {
             console.log("AI stopped Speaking");
             setIsSpeaking(false);
         }
-        const handleMessage = (message: any) => {
-            if (message.type === "transcript" && message.transcriptType === "final") {
-                const newMessage = { content: message.transcript, role: message.role };
-                setMessages((prev) => [...prev, newMessage]);
-            }
+        const handleMessage = (message: Record<string, unknown>) => {
+          if (message.type === "transcript" && message.transcriptType === "final") {
+            const newMessage = { content: message.transcript as string, role: message.role as string };
+            setMessages((prev) => [...prev, newMessage]);
+          }
         };
-        const handleError = (error: any) => {
+        const handleError = (error: Record<string, unknown>) => {
             console.log("Vapi Error", error);
             setConnecting(false);
             setCallActive(false);
@@ -185,7 +185,7 @@ function VapiWidget() {
             {/* User Image */}
             <div className="relative size-32 mb-4">
               <Image
-                src={user?.imageUrl!}
+                src={user?.imageUrl ?? '/default-avatar.png'}
                 alt="User"
                 width={128}
                 height={128}
