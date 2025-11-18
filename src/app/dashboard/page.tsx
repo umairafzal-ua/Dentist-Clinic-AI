@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import Navbar from '@/components/Navbar'
 import React from 'react'
 import WelcomeSection from '@/components/dashboard/WelcomeSection'
